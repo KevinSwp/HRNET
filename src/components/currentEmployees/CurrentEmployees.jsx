@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deleteEmployee } from '../../reducers/saveUserReducer';
+import { useCurrentEmployee } from '../../hooks/logics/useCurrentEmployee';
 
 /**
  * Function list employees
@@ -61,11 +62,20 @@ function CurrentEmployeesList() {
         },
     ];
 
+    const { search, handleSearchChange, filteredEmployees } = useCurrentEmployee(employees, columns);
+
     return (
         <div className="container">
             <h1>Current Employees</h1>
+            <input 
+                type="text" 
+                placeholder="Search..." 
+                value={search} 
+                onChange={handleSearchChange}
+                style={{ marginBottom: "16px" }}
+            />
             <DataTable
-                data={employees}
+                data={filteredEmployees}
                 columns={columns}
                 pagination
                 noDataComponent={<div>No matching records found</div>}
