@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deleteEmployee } from '../../reducers/saveUserReducer';
-import { useCurrentEmployee } from '../../hooks/logics/useCurrentEmployee';
+import useCurrentEmployee from '../../hooks/logics/useCurrentEmployee';
 
 /**
  * Function list employees
@@ -62,7 +62,7 @@ function CurrentEmployeesList() {
         },
     ];
 
-    const { search, handleSearchChange, filteredEmployees } = useCurrentEmployee(employees, columns);
+    const [searchTerm, handleSearchChange, filteredEmployees] = useCurrentEmployee(employees, columns);
 
     return (
         <div className="container">
@@ -70,7 +70,7 @@ function CurrentEmployeesList() {
             <input 
                 type="text" 
                 placeholder="Search..." 
-                value={search} 
+                value={searchTerm} 
                 onChange={handleSearchChange}
                 style={{ marginBottom: "16px" }}
             />

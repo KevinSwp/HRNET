@@ -35,6 +35,7 @@ function CreateEmployeesForm() {
 
   return (
     <div className="container">
+      <h1>HRnet</h1>
       <Link className="list" to="/current-employees">View Current Employees</Link>
       <h2>Create Employee</h2>
       <form id="create-employee">

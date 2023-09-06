@@ -1,26 +1,36 @@
 import { useState } from 'react';
 
-export const useCurrentEmployee = (initialEmployees, columns = []) => {
-    const [search, setSearch] = useState("");
+/**
+ * Function logic list employee
+ */
+function useCurrentEmployee(initialEmployees = [], columns = []) {
+    // State for storing the current value of the search term entered by the user
+    const [searchTerm, setSearchTerm] = useState("");
 
+    // Function to update the searchTerm state whenever the user changes the search input
     const handleSearchChange = (event) => {
-        setSearch(event.target.value);
+        setSearchTerm(event.target.value);
     };
 
+    // Creating a new array `filteredEmployees` by filtering through the `initialEmployees` list
     const filteredEmployees = initialEmployees.filter(employee => {
-        return columns && columns.some(column => {
-            if(column.selector && typeof column.selector === 'function'){
+        // For each employee, check if any of the specified columns contains the search term.
+        return columns.some(column => {
+            // Check if the current column has a selector and that the selector is a function
+            if (column.selector && typeof column.selector === 'function') {
+                // Invoke the column's selector function to retrieve the value of interest from the employee object
                 const stringifiedValue = String(column.selector(employee));
-                return stringifiedValue.toLowerCase().includes(search.toLowerCase());
+                // Convert both the retrieved value and search term to lowercase and check if the value contains the search term
+                return stringifiedValue.toLowerCase().includes(searchTerm.toLowerCase());
             }
+            // If the current column doesn't have a valid selector function, simply return false
             return false;
         });
     });
 
-    return {
-        search,
-        handleSearchChange,
-        filteredEmployees
-    };
-};
 
+    // Custom hook returns
+    return [searchTerm, handleSearchChange, filteredEmployees];
+}
+
+export default useCurrentEmployee;
