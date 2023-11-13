@@ -7,7 +7,10 @@ function useCurrentEmployee(initialEmployees = [], columns = []) {
     // State for storing the current value of the search term entered by the user
     const [searchTerm, setSearchTerm] = useState("");
 
-    // Function to update the searchTerm state whenever the user changes the search input
+    /**
+     * handleSearchChange updates the searchTerm state based on user input in the search field.
+     * @param {Object} event - The event object from the search input field.
+     */
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
     };

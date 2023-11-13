@@ -20,7 +20,10 @@ function useCreateEmployeeForm() {
   // State to hold form data with its setter function
   const [formData, setFormData] = useState(initialState);
 
-  // Handle form input changes
+  /**
+   * handleChange updates the form data state when an input field changes.
+   * @param {Object} e - The event object from the input field.
+   */
   const handleChange = (e) => {
     // Destructuring the name and value properties from the event target (input element)
     const { name, value } = e.target;
@@ -31,7 +34,9 @@ function useCreateEmployeeForm() {
     });
   };
 
-  // Function to save the employee data and reset the form
+  /**
+   * Function to save the employee data and reset the form
+   */
   const saveEmployeeData = () => {
     // Logging the current form data to console for demonstration purposes
     console.log('Employee Data:', formData);

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
-import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { deleteEmployee } from '../../reducers/saveUserReducer';
 import useCurrentEmployee from '../../hooks/logics/useCurrentEmployee';
+import NavBar from '../layout/NavigationBar';
 
 import './listEmployee.scss';
 
@@ -23,7 +23,10 @@ function CurrentEmployeesList() {
         const initialEmployees = JSON.parse(localStorage.getItem('employees')) || [];
         setEmployees(initialEmployees);
 
-        // Event handler to listen for changes to the 'employees' key in local storage
+        /**
+         * handleStorageChange listens for changes in local storage.
+         * @param {Object} e - The storage event object.
+         */
         function handleStorageChange(e) {
             if (e.key === 'employees') {
                 // Update employees state if there's a change in local storage
@@ -41,8 +44,8 @@ function CurrentEmployeesList() {
     }, []);  // Empty dependency array ensures this useEffect runs only once, similar to componentDidMount
 
     /**
-     * description
-     * @params {Object} employee description du paramètres     
+     * handleDelete removes an employee from the list.
+     * @param {Object} employee - The employee to be deleted.
      */
     const handleDelete = (employee) => {
         const updatedEmployees = employees.filter(emp => emp.firstName !== employee.firstName);
@@ -53,15 +56,15 @@ function CurrentEmployeesList() {
 
     // Configuration for DataTable columns
     const columns = [
-        { name: 'First Name', selector: row => row.firstName },
-        { name: 'Last Name', selector: row => row.lastName },
-        { name: 'Start Date', selector: row => row.startDate },
-        { name: 'Department', selector: row => row.department },
-        { name: 'Date of Birth', selector: row => row.dateOfBirth },
-        { name: 'Street', selector: row => row.street },
-        { name: 'City', selector: row => row.city },
-        { name: 'State', selector: row => row.state },
-        { name: 'Zip Code', selector: row => row.zipCode },
+        { name: 'Prenom', selector: row => row.firstName, sortable: true },
+        { name: 'Nom', selector: row => row.lastName, sortable: true },
+        { name: 'Debut', selector: row => row.startDate, sortable: true },
+        { name: 'Departement', selector: row => row.department, sortable: true },
+        { name: 'Date de naissance', selector: row => row.dateOfBirth, sortable: true },
+        { name: 'Rue', selector: row => row.street, sortable: true },
+        { name: 'Ville', selector: row => row.city, sortable: true },
+        { name: 'Etat', selector: row => row.state, sortable: true },
+        { name: 'Code postal', selector: row => row.zipCode, sortable: true },
         {
             name: 'Delete',
             cell: row => <button onClick={() => handleDelete(row)}>Delete</button>
@@ -71,22 +74,24 @@ function CurrentEmployeesList() {
     const [searchTerm, handleSearchChange, filteredEmployees] = useCurrentEmployee(employees, columns);
 
     return (
-        <div className="containerBis">
-            <h1>Current Employees</h1>
-            <input 
-                type="text" 
-                placeholder="Search..." 
-                value={searchTerm} 
-                onChange={handleSearchChange}
-                style={{ marginBottom: "16px" }}
-            />
-            <DataTable
-                data={filteredEmployees}
-                columns={columns}
-                pagination
-                noDataComponent={<div>No matching records found</div>}
-            />
-            <Link className="backHome" to="/">Home</Link>
+        <div className='body'>
+            <NavBar />
+            <div className="containerBis">
+                <h1>Employés</h1>
+                <input 
+                    type="text" 
+                    placeholder="Search..." 
+                    value={searchTerm} 
+                    onChange={handleSearchChange}
+                    style={{ marginBottom: "16px" }}
+                    />
+                <DataTable
+                    data={filteredEmployees}
+                    columns={columns}
+                    pagination
+                    noDataComponent={<div>Pas d'employés</div>}
+                    />
+            </div>
         </div>
     );
 }
