@@ -1,9 +1,9 @@
 {
   "name": "plugin_success",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
-  "description": "Description de que fera votre librarie ?",
-  "author": "Votre nom",
+  "description": "Affiche une modale de success d'une création d'un employé",
+  "author": "Kevin",
   "keywords": ["react", "components", "plugin"],
   "main": "dist/index.js",
   "module": "dist/index.js",
