@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { deleteEmployee } from '../../reducers/saveUserReducer';
 import useCurrentEmployee from '../../hooks/logics/useCurrentEmployee';
 
+import './listEmployee.scss';
+
 /**
  * Function list employees
  */
@@ -38,6 +40,10 @@ function CurrentEmployeesList() {
         };
     }, []);  // Empty dependency array ensures this useEffect runs only once, similar to componentDidMount
 
+    /**
+     * description
+     * @params {Object} employee description du paramètres     
+     */
     const handleDelete = (employee) => {
         const updatedEmployees = employees.filter(emp => emp.firstName !== employee.firstName);
         setEmployees(updatedEmployees);
@@ -65,7 +71,7 @@ function CurrentEmployeesList() {
     const [searchTerm, handleSearchChange, filteredEmployees] = useCurrentEmployee(employees, columns);
 
     return (
-        <div className="container">
+        <div className="containerBis">
             <h1>Current Employees</h1>
             <input 
                 type="text" 

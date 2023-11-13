@@ -1,37 +1,57 @@
-import React from 'react';
-import useCreateEmployeeForm from '../../hooks/logics/useCreateEmployeeForm';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { saveEmployee } from '../../reducers/saveUserReducer';
 import { Link } from 'react-router-dom';
-import states from '../../data/states.json'
+import states from '../../data/states.json';
+import { Modal } from 'plugin_success';
+import useCreateEmployeeForm from '../../hooks/logics/useCreateEmployeeForm';
 
 import './form.scss';
 
 /**
- * Function create employee
+ * Function form to create an employee
  */
-
 function CreateEmployeesForm() {
-  // Use the useDispatch hook to get a reference to the dispatch function from Redux.
+  // Using the useDispatch hook from Redux to dispatch actions
   const dispatch = useDispatch();
 
+  // Custom hook for managing form data, handling changes, and saving employee data
   const [formData, handleChange, saveEmployeeData] = useCreateEmployeeForm();
 
-  const handleSave = (e) => {
-    e.preventDefault();
+  // State to control the visibility of the success modal
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
-    // Dispatches the saveEmployee action to the Redux store with formData as payload.
+  // Function to handle the save operation when the Save button is clicked
+  const handleSave = (e) => {
+    e.preventDefault();  // Prevents the default form submit behavior
+
+    // Checks if all fields in the form are filled
+    /*const allFieldsFilled = Object.values(formData).every(value => value.trim() !== '');
+    if (!allFieldsFilled) {
+      alert("Tous les champs doivent être remplis."); // Alert if any field is empty
+      return;
+    }*/
+
+    // Dispatches an action to save employee data to the Redux store
     dispatch(saveEmployee(formData));
 
-    // Calls the saveEmployeeData function from useCreateEmployeeForm.
+    // Calls a function from the custom hook to save employee data (possibly to a server or local state)
     saveEmployeeData();
 
-    // Fetches the current list of employees from localStorage (or sets an empty array if none found).
-    // Then, the new formData (new employee) is added to the list and saved back to localStorage.
+    // Retrieves the current list of employees from localStorage, adds the new employee, and saves it back
     const currentEmployees = JSON.parse(localStorage.getItem('employees')) || [];
     currentEmployees.push(formData);
     localStorage.setItem('employees', JSON.stringify(currentEmployees));
+
+    // Sets the modal visibility to true, which will show the success modal
+    setIsModalVisible(true);
   };
+
+  // Function to close the modal, sets the modal visibility to false
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
 
   return (
     <div className="container">
@@ -70,7 +90,7 @@ function CreateEmployeesForm() {
           </select>
 
           <label htmlFor="zipCode">Zip Code</label>
-          <input type="number" id="zipCode" name="zipCode" pattern="^(?(^00000(|-0000))|(\d{5}(|-\d{4})))$" value={formData.zipCode} onChange={handleChange} />
+          <input type="number" id="zipCode" name="zipCode" value={formData.zipCode} onChange={handleChange} />
         </fieldset>
 
         <label htmlFor="department">Department</label>
@@ -81,9 +101,12 @@ function CreateEmployeesForm() {
           <option>Human Resources</option>
           <option>Legal</option>
         </select>
+
+        <button onClick={handleSave} className='btnSave'>Save</button>
       </form>
 
-      <button onClick={handleSave}>Save</button>
+      {isModalVisible && <Modal isOpen={true} onClose={handleCloseModal} />}
+      {/* {isModalVisible && <Modal isOpen={true} />} */}
     </div>
   );
 }

@@ -12,7 +12,7 @@ function useCurrentEmployee(initialEmployees = [], columns = []) {
         setSearchTerm(event.target.value);
     };
 
-    // Creating a new array `filteredEmployees` by filtering through the `initialEmployees` list
+    // Creating a new array
     const filteredEmployees = initialEmployees.filter(employee => {
         // For each employee, check if any of the specified columns contains the search term.
         return columns.some(column => {
@@ -23,7 +23,7 @@ function useCurrentEmployee(initialEmployees = [], columns = []) {
                 // Convert both the retrieved value and search term to lowercase and check if the value contains the search term
                 return stringifiedValue.toLowerCase().includes(searchTerm.toLowerCase());
             }
-            // If the current column doesn't have a valid selector function, simply return false
+            // If the current column doesn't have a valid selector function
             return false;
         });
     });
