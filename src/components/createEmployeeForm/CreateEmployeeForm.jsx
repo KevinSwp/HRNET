@@ -32,11 +32,11 @@ function CreateEmployeesForm() {
     e.preventDefault();  // Prevents the default form submit behavior
 
     // Checks if all fields in the form are filled
-    /*const allFieldsFilled = Object.values(formData).every(value => value.trim() !== '');
+    const allFieldsFilled = Object.values(formData).every(value => value.trim() !== '');
     if (!allFieldsFilled) {
       alert("Tous les champs doivent être remplis."); // Alert if any field is empty
       return;
-    }*/
+    }
 
     // Dispatches an action to save employee data to the Redux store
     dispatch(saveEmployee(formData));
