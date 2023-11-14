@@ -35,17 +35,15 @@ function useCreateEmployeeForm() {
   };
 
   /**
-   * Function to save the employee data and reset the form
+   * Function to reset the form
    */
-  const saveEmployeeData = () => {
-    // Logging the current form data to console for demonstration purposes
-    console.log('Employee Data:', formData);
+  const resetForm = () => {
     // Resetting the form data to initial state
     setFormData(initialState);
   };
 
-  // Return values from the custom hook (current form data, change handler, and save function)
-  return [formData, handleChange, saveEmployeeData];
+  // Return values from the custom hook
+  return [formData, handleChange, resetForm];
 }
 
 // Exporting the custom hook for usage in other components

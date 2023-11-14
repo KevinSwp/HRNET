@@ -17,8 +17,8 @@ function CreateEmployeesForm() {
 
   const navigate = useNavigate();
 
-  // Custom hook for managing form data, handling changes, and saving employee data
-  const [formData, handleChange, saveEmployeeData] = useCreateEmployeeForm();
+  // Custom hook for managing form data, handling changes, and reset data
+  const [formData, handleChange, resetForm] = useCreateEmployeeForm();
 
   // State to control the visibility of the success modal
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -41,13 +41,8 @@ function CreateEmployeesForm() {
     // Dispatches an action to save employee data to the Redux store
     dispatch(saveEmployee(formData));
 
-    // Calls a function from the custom hook to save employee data (possibly to a server or local state)
-    saveEmployeeData();
-
-    // Retrieves the current list of employees from localStorage, adds the new employee, and saves it back
-    const currentEmployees = JSON.parse(localStorage.getItem('employees')) || [];
-    currentEmployees.push(formData);
-    localStorage.setItem('employees', JSON.stringify(currentEmployees));
+    // Calls a function from the custom hook to reset the form
+    resetForm();
 
     // Sets the modal visibility to true, which will show the success modal
     setIsModalVisible(true);
@@ -115,7 +110,7 @@ function CreateEmployeesForm() {
           <button onClick={handleSave} className='btnSave'>Créer</button>
         </form>
 
-        {isModalVisible && <Modal isOpen={true} onClose={handleCloseModal} />}
+        {isModalVisible && <Modal isOpen={true} onClose={handleCloseModal} modalText="Employé crée !"/>}
       </div>
     </div>
   );

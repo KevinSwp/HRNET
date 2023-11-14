@@ -36,6 +36,12 @@
       color: #666;
     }
 
+    .address {
+      label {
+        margin-top: 1rem;
+      }
+    }
+
     input[type="text"],
     input[type="date"],
     input[type="number"],
