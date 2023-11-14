@@ -1,6 +1,6 @@
 {
   "name": "plugin_success",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "description": "Affiche une modale de success d'une création d'un employé",
   "author": "Kevin",
@@ -10,7 +10,7 @@
   "files": [ "dist", "README.md" ],
   "repository": {
       "type": "git",
-      "url": "git+https://github.com/KevinSwp/HRNET.git"
+      "url": "git+https://github.com/KevinSwp/HRNET/tree/plugin_success"
   },
 
   "dependencies": {
