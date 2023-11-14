@@ -1,8 +1,6 @@
 import React from 'react';
 import CurrentEmployeesList from '../../components/currentEmployees/CurrentEmployees';
 
-// import './home.scss';
-
 /**
  * Defining the CurrentEmployees page component
  */

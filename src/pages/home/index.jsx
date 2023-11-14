@@ -1,6 +1,5 @@
 import React from 'react';
 import CreateEmployeesForm from '../../components/createEmployeeForm/CreateEmployeeForm';
-// import './home.scss';
 
 /**
  * Defining the Home component

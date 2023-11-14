@@ -48,10 +48,13 @@ function CurrentEmployeesList() {
      * @param {Object} employee - The employee to be deleted.
      */
     const handleDelete = (employee) => {
-        const updatedEmployees = employees.filter(emp => emp.firstName !== employee.firstName);
-        setEmployees(updatedEmployees);
-        localStorage.setItem('employees', JSON.stringify(updatedEmployees));
-        dispatch(deleteEmployee(employee));
+        // Display a confirmation
+        if (window.confirm(`Êtes-vous sûr de vouloir supprimer ${employee.firstName} ${employee.lastName} ?`)) {
+            const updatedEmployees = employees.filter(emp => emp.firstName !== employee.firstName);
+            setEmployees(updatedEmployees);
+            localStorage.setItem('employees', JSON.stringify(updatedEmployees));
+            dispatch(deleteEmployee(employee));
+        }
     };
 
     // Configuration for DataTable columns
@@ -66,7 +69,6 @@ function CurrentEmployeesList() {
         { name: 'Etat', selector: row => row.state, sortable: true },
         { name: 'Code postal', selector: row => row.zipCode, sortable: true },
         {
-            name: 'Delete',
             cell: row => <button onClick={() => handleDelete(row)}>Delete</button>
         },
     ];
@@ -78,19 +80,19 @@ function CurrentEmployeesList() {
             <NavBar />
             <div className="containerBis">
                 <h1>Employés</h1>
-                <input 
-                    type="text" 
-                    placeholder="Search..." 
-                    value={searchTerm} 
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchTerm}
                     onChange={handleSearchChange}
                     style={{ marginBottom: "16px" }}
-                    />
+                />
                 <DataTable
                     data={filteredEmployees}
                     columns={columns}
                     pagination
                     noDataComponent={<div>Pas d'employés</div>}
-                    />
+                />
             </div>
         </div>
     );
